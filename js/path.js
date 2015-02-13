@@ -11,6 +11,7 @@ function Path(points) {
   } else {
     this.points = Array.prototype.slice.call(arguments);
   }
+  this.withLight = true;
 }
 
 
@@ -40,9 +41,13 @@ Path.prototype.reverse = function () {
 Path.prototype.translate = function () {
   var args = arguments;
 
-  return new Path(this.points.map(function (point) {
+  new_path =  new Path(this.points.map(function (point) {
     return point.translate.apply(point, args);
   }));
+
+  new_path.withLight = this.withLight;
+
+  return new_path;
 };
 
 /**

@@ -108,7 +108,13 @@ Isomer.prototype._addPath = function (path, baseColor) {
    * on the dot product between the light source vector and normal.
    */
   var brightness = Vector.dotProduct(normal, this.lightAngle);
-  var color = baseColor.lighten(brightness * this.colorDifference, this.lightColor);
+
+  var color;
+  if (path.withLight) {
+    color = baseColor.lighten(brightness * this.colorDifference, this.lightColor);
+  } else {
+    color = baseColor;
+  }
 
   this.canvas.path(path.points.map(this._translatePoint.bind(this)), color);
 };
